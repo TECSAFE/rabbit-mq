@@ -1,0 +1,34 @@
+name: Publish RabbitMQ
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: rabbit-mq
+          registry: ghcr.io
+          directory: ./
+          dockerfile: ./Dockerfile
+          addLatest: true
+          multiPlatform: true
+          platform: linux/amd64,linux/arm64
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          buildArgs: TECSAFE_VERSION=${{ github.sha }}

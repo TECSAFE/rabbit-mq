@@ -1,0 +1,68 @@
+{
+  "bindings": [
+    {
+      "arguments": {},
+      "destination": "test",
+      "destination_type": "queue",
+      "routing_key": "customer.*",
+      "source": "general",
+      "vhost": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "configure": ".*",
+      "read": ".*",
+      "user": "guest",
+      "vhost": "/",
+      "write": ".*"
+    }
+  ],
+  "queues": [
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "test",
+      "type": "classic",
+      "vhost": "/"
+    }
+  ],
+  "parameters": [],
+  "policies": [],
+  "rabbitmq_version": "3.13.7",
+  "rabbit_version": "3.13.7",
+  "exchanges": [
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "general",
+      "type": "topic",
+      "vhost": "/"
+    }
+  ],
+  "users": [
+    {
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "limits": {},
+      "name": "guest",
+      "password_hash": "M8zpDUcpAQ8lDJoQpg8UUIt8yX4ZRx2w2ACgw68XElvN3Tq/",
+      "tags": [
+        "administrator"
+      ]
+    }
+  ],
+  "topic_permissions": [],
+  "vhosts": [
+    {
+      "limits": [],
+      "metadata": {
+        "description": "Default virtual host",
+        "tags": []
+      },
+      "name": "/"
+    }
+  ],
+  "global_parameters": []
+}

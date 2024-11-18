@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: ghcr.io/tecsafe/rabbit-mq:latest
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - mq:/var/lib/rabbitmq
+
+volumes:
+  mq:

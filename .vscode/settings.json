@@ -1,0 +1,14 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+  },
+  "cSpell.words": [
+  ],
+  "Lua.workspace.library": [],
+  "Lua.workspace.userThirdParty": [
+    "/home/jb/.config/Code/User/workspaceStorage/57cf377bf194adb57a635aa7d89f7890/justarandomgeek.factoriomod-debug/sumneko-3rd"
+  ],
+  "Lua.workspace.checkThirdParty": "ApplyInMemory",
+}
