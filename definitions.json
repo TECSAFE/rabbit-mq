@@ -7,6 +7,14 @@
       "routing_key": "customer.*",
       "source": "general",
       "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "email",
+      "destination_type": "queue",
+      "routing_key": "email.*",
+      "source": "general",
+      "vhost": "/"
     }
   ],
   "permissions": [
@@ -24,6 +32,14 @@
       "auto_delete": false,
       "durable": true,
       "name": "test",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "email",
       "type": "classic",
       "vhost": "/"
     }
