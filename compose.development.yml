@@ -1,0 +1,5 @@
+services:
+  rabbit-mq-app:
+    build:
+      context: .
+      dockerfile: Dockerfile

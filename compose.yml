@@ -1,0 +1,18 @@
+services:
+  rabbit-mq-app:
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+    volumes:
+      - rabbit-mq-data:/var/lib/rabbitmq
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ofcp-rabbit-mq.tls=true"
+      - "traefik.http.routers.ofcp-rabbit-mq.rule=Host(`ofcp-rabbit-mq.local.tec-digital.de`)"
+      - "traefik.http.services.ofcp-rabbit-mq.loadbalancer.server.port=15672"
+
+volumes:
+  rabbit-mq-data:

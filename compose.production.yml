@@ -1,0 +1,3 @@
+services:
+  rabbit-mq-app:
+    image: ghcr.io/tecsafe/rabbit-mq:latest

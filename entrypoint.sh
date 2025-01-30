@@ -27,8 +27,18 @@ fi
 
 /usr/local/bin/docker-entrypoint.sh rabbitmq-server &
 PID=$!
+DIED_ONCE=0
 
 until rabbitmqctl status > /dev/null 2>&1; do
+  if ! kill -0 $PID > /dev/null 2>&1; then
+    if [ $DIED_ONCE -eq 1 ]; then
+      echo "RabbitMQ died twice, exiting..."
+      exit 1
+    fi
+    echo "RabbitMQ died, restarting..."
+    /usr/local/bin/docker-entrypoint.sh rabbitmq-server &
+    PID=$!
+  fi
   echo "Waiting for RabbitMQ to start..."
   sleep 5
 done
