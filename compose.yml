@@ -11,6 +11,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ofcp-rabbit-mq.tls=true"
+      - "traefik.http.routers.ofcp-rabbit-mq.middlewares=ofcp-forward-auth"
       - "traefik.http.routers.ofcp-rabbit-mq.rule=Host(`ofcp-rabbit-mq.${MAIN_DOMAIN}`)"
       - "traefik.http.services.ofcp-rabbit-mq.loadbalancer.server.port=15672"
 
