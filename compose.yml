@@ -10,10 +10,10 @@ services:
       - rabbit-mq-data:/var/lib/rabbitmq
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ofcp-rabbit-mq.tls=true"
-      - "traefik.http.routers.ofcp-rabbit-mq.middlewares=ofcp-forward-auth"
-      - "traefik.http.routers.ofcp-rabbit-mq.rule=Host(`ofcp-rabbit-mq.${MAIN_DOMAIN}`)"
-      - "traefik.http.services.ofcp-rabbit-mq.loadbalancer.server.port=15672"
+      - "traefik.http.routers.${TRAEFIK_TAG:-ofcp}-rabbit-mq.tls=true"
+      - "traefik.http.routers.${TRAEFIK_TAG:-ofcp}-rabbit-mq.middlewares=${TRAEFIK_TAG:-ofcp}-forward-auth"
+      - "traefik.http.routers.${TRAEFIK_TAG:-ofcp}-rabbit-mq.rule=Host(`ofcp-rabbit-mq.${MAIN_DOMAIN}`)"
+      - "traefik.http.services.${TRAEFIK_TAG:-ofcp}-rabbit-mq.loadbalancer.server.port=15672"
 
 volumes:
   rabbit-mq-data:
