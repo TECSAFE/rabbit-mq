@@ -14,6 +14,8 @@ services:
       - "traefik.http.routers.${TRAEFIK_TAG:-ofcp}-rabbit-mq.middlewares=${TRAEFIK_TAG:-ofcp}-forward-auth"
       - "traefik.http.routers.${TRAEFIK_TAG:-ofcp}-rabbit-mq.rule=Host(`ofcp-rabbit-mq.${MAIN_DOMAIN}`)"
       - "traefik.http.services.${TRAEFIK_TAG:-ofcp}-rabbit-mq.loadbalancer.server.port=15672"
+      - "traefik-app-dashboard.service=${TRAEFIK_TAG:-ofcp}-rabbit-mq"
+      - "traefik-app-dashboard.img=https://www.rabbitmq.com/img/rabbitmq-logo-with-name.svg"
 
 volumes:
   rabbit-mq-data:
