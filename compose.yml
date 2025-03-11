@@ -1,6 +1,9 @@
+x-restart: &restart
+  restart: ${RESTART_POLICY:-unless-stopped}
+
 services:
   rabbit-mq-app:
-    restart: unless-stopped
+    <<: *restart
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 30s
