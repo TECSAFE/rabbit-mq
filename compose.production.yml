@@ -1,3 +1,9 @@
+x-restart: &restart
+  restart: unless-stopped
+
 services:
   rabbit-mq-app:
+    <<: *restart
     image: ghcr.io/tecsafe/rabbit-mq:main-7aaed00
+  rabbit-mq-proxy:
+   <<: *restart
