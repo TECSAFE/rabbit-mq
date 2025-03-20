@@ -1,11 +1,7 @@
-x-restart: &restart
-  restart: on-failure
-
 services:
   rabbit-mq-app:
-    <<: *restart
     build:
       context: .
       dockerfile: Dockerfile
-  rabbit-mq-proxy:
-   <<: *restart
+    volumes:
+      - ./definitions.json:/etc/rabbitmq/definitions.json:ro

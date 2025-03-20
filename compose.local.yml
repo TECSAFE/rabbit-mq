@@ -1,5 +1,10 @@
+x-restart: &restart
+  restart: ${RESTART}
+
 services:
   rabbit-mq-app:
+    <<: *restart
+    image: ghcr.io/tecsafe/rabbit-mq:main-7aaed00
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 30s
@@ -9,6 +14,7 @@ services:
       - rabbit-mq-data:/var/lib/rabbitmq
   rabbit-mq-proxy:
     image: ghcr.io/scolastico-dev/s.containers/rabbitmq-auth-proxy:latest
+    <<: *restart
     depends_on:
       rabbit-mq-app:
         condition: service_healthy
