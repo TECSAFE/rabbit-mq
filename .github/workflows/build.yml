@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - INF-16-refactorBuildPipeline
 
 jobs:
   buildAndPush:
