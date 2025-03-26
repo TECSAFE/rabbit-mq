@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - INF-16-refactorBuildPipeline
 
 jobs:
   buildAndPush:
@@ -19,6 +20,9 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Setup QEMU (multi-platform-support)
+        uses: docker/setup-qemu-action@v3
 
       - name: Queue
         uses: docker/build-push-action@v6
