@@ -21,9 +21,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup QEMU (multi-platform-support)
-        uses: docker/setup-qemu-action@v3
-
       - name: Queue
         uses: docker/build-push-action@v6
         with:
@@ -32,4 +29,3 @@ jobs:
           push: true
           tags: ghcr.io/tecsafe/rabbit-mq:latest
           build-args: TECSAFE_VERSION=${{ github.sha }}
-          platforms: linux/amd64,linux/arm64
