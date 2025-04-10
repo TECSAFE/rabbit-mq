@@ -1,17 +1,25 @@
-name: Build and push docker images to Container-Registry
+name: Build and Push Docker Image to GHCR
 
 on:
   push:
     branches:
       - main
 
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}
+
 jobs:
-  buildAndPush:
-    name: Build and push images to Container-Registry
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+  build:
+    timeout-minutes: 20
+    #Preparation for multi-arch docker builds.
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            platform: linux/amd64
+    runs-on: ${{ matrix.runner }}
     steps:
-      - name: Login GitHub Container Registry
+      - name: Docker Github Registry Login
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -21,18 +29,54 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up QEMU for Multi platform support
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
+      - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: RabbitMQ image build and push
+      - name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{env.IMAGE_NAME}}
+          tags:
+            - latest
+      #Preparation for multi-arch docker builds
+      #          flavor: |
+      #            latest=auto
+      #            suffix=-${{matrix.arch}},onlatest=true
+
+
+      - name: Build and push ${{ matrix.platform }} image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
+          platforms:  ${{ matrix.platform }}
           push: true
-          tags: ghcr.io/tecsafe/rabbit-mq:latest
+          tags: ${{steps.meta.outputs.tags}}
+          labels: ${{steps.meta.outputs.labels}}
           build-args: TECSAFE_VERSION=${{ github.sha }}
-          platforms: linux/amd64,linux/arm64
+#Preparation for multi-arch docker builds
+#  create-manifest:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Convert repository name to lowercase
+#        id: lowercase
+#        run: echo "IMAGE_NAME=ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+#
+#      - uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#
+#
+#      - name: Create and push multi-arch manifest
+#        run: |
+#
+#          # Create and push multi-arch manifest for latest tag
+#          docker manifest create ${{env.IMAGE_NAME}}:latest \
+#            ${{env.IMAGE_NAME}}:latest-amd64 \
+#            ${{env.IMAGE_NAME}}:latest-arm64
+#
+#          docker manifest push ${{env.IMAGE_NAME}}:latest
