@@ -37,8 +37,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{env.IMAGE_NAME}}
-          tags:
-            - latest
+          tags: |
+            latest
       #Preparation for multi-arch docker builds
       #          flavor: |
       #            latest=auto
