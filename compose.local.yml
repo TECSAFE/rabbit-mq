@@ -4,7 +4,7 @@ x-restart: &restart
 services:
   rabbit-mq-app:
     <<: *restart
-    image: ghcr.io/tecsafe/rabbit-mq:main-7aaed00
+    image: ghcr.io/tecsafe/rabbit-mq:latest
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 30s
