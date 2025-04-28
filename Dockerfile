@@ -1,4 +1,5 @@
-FROM rabbitmq:3.13.7-management-alpine
+# @todo update if possible to 3.13.* or higher, 3.13.7 actually broken 28.05.2024
+FROM rabbitmq:3.13.6-management-alpine
 LABEL maintainer="Tecsafe GmbH <support@madco.de>"
 
 RUN apk add --no-cache curl jq
