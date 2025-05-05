@@ -1,5 +1,4 @@
-# @todo update if possible to 3.13.* or higher, 3.13.7 actually broken 28.05.2024
-FROM rabbitmq:3.13.6-management-alpine
+FROM rabbitmq:4.0-alpine
 LABEL maintainer="Tecsafe GmbH <support@madco.de>"
 
 RUN apk add --no-cache curl jq
@@ -15,3 +14,5 @@ COPY definitions.json /etc/rabbitmq/definitions.json
 
 ENTRYPOINT [ "entrypoint-overwrite.sh" ]
 CMD ["rabbitmq-server"]
+
+HEALTHCHECK --interval=20s --timeout=10s --retries=10 CMD ["rabbitmq-diagnostics", "ping"]
