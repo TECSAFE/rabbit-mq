@@ -1,7 +1,19 @@
+x-restart: &restart
+  restart: ${RESTART}
+
+include:
+  - path:
+      - ./docker/compose.proxy.yml
+
 services:
   rabbit-mq-app:
     build:
       context: .
       dockerfile: Dockerfile
+    <<: *restart
     volumes:
       - ./definitions.json:/etc/rabbitmq/definitions.json:ro
+      - rabbit-mq-data:/var/lib/rabbitmq
+
+volumes:
+  rabbit-mq-data:

@@ -2,16 +2,6 @@ x-restart: &restart
   restart: ${RESTART}
 
 services:
-  rabbit-mq-app:
-    <<: *restart
-    image: ghcr.io/tecsafe/rabbit-mq:latest
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 6
-    volumes:
-      - rabbit-mq-data:/var/lib/rabbitmq
   rabbit-mq-proxy:
     image: ghcr.io/scolastico-dev/s.containers/rabbitmq-auth-proxy:latest
     <<: *restart
@@ -28,6 +18,3 @@ services:
       - "traefik.http.services.${TRAEFIK_TAG:-ofcp}-rabbit-mq.loadbalancer.server.port=3000"
       - "traefik-app-dashboard.service=${TRAEFIK_TAG:-ofcp}-rabbit-mq"
       - "traefik-app-dashboard.img=https://www.rabbitmq.com/img/rabbitmq-logo-with-name.svg"
-
-volumes:
-  rabbit-mq-data:

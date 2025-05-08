@@ -1,0 +1,11 @@
+x-restart: &restart
+  restart: ${RESTART}
+
+include:
+  - path:
+      - ./docker/compose.proxy.yml
+
+services:
+  rabbit-mq-app:
+    <<: *restart
+    image: ghcr.io/tecsafe/rabbit-mq:latest
