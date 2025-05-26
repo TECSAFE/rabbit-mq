@@ -13,7 +13,3 @@ services:
     <<: *restart
     volumes:
       - ./definitions.json:/etc/rabbitmq/definitions.json:ro
-      - rabbit-mq-data:/var/lib/rabbitmq
-
-volumes:
-  rabbit-mq-data:
