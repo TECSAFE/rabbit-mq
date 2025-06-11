@@ -8,4 +8,4 @@ include:
 services:
   rabbit-mq-app:
     <<: *restart
-    image: ghcr.io/tecsafe/rabbit-mq:latest
+    image: ghcr.io/tecsafe/rabbit-mq:staging
